@@ -76,3 +76,14 @@ function validatePIN (pin) {
     return false;
   }
 }
+
+// You are given an odd-length array of integers, in which all of them are the same, except for one single number.
+// Complete the method which accepts such an array, and returns that single different number.
+
+function stray(numbers) {
+  let countHash = {}
+  numbers.map((element) => {
+    countHash.hasOwnProperty(element) ? countHash[element] += 1 : countHash[element] = 1
+  })
+  return parseInt(Object.keys(countHash).find(key => countHash[key] === 1));
+}
