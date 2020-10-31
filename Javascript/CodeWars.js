@@ -87,3 +87,15 @@ function stray(numbers) {
   })
   return parseInt(Object.keys(countHash).find(key => countHash[key] === 1));
 }
+
+// The main idea is to count all the occurring characters in a string. If you have a string like aba, then the result should be {'a': 2, 'b': 1}.
+// What if the string is empty? Then the result should be empty object literal, {}.
+
+function count (string) {  
+  let arrayOfLetters = string.split('');
+  let countObject = {};
+  arrayOfLetters.map(letter => {
+    countObject[letter] ? countObject[letter] += 1 : countObject[letter] = 1
+  })
+  return countObject;
+}
