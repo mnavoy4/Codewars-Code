@@ -145,3 +145,37 @@ function nbMonths(startPriceOld, startPriceNew, savingperMonth, percentLossByMon
   }
   return [months, Math.round(total - startPriceNew)]
 }
+
+// Statistics for an Athletic Association
+function stat(strg) {
+  const arrayOfTimes = strg.split(", ");
+  const arrayOfSeconds = arrayOfTimes.map(time => {
+    let hours = parseInt(time.split("|")[0]);
+    let minutes = parseInt(time.split("|")[1]);
+    let seconds = parseInt(time.split("|")[2]);
+    return hours * 3600 + minutes * 60 + seconds;
+  });
+  function convert(seconds){
+    let hours = 0;
+    let minutes = 0;
+    let secondsRemaining = 0;
+    while (seconds >= 3600){
+      hours++;
+      seconds -= 3600;
+//       console.log(hours, seconds)
+    };
+    while (seconds >= 60){
+      minutes++;
+      seconds -= 60;
+    }
+    secondsRemaining = seconds;
+    return `${("0" + hours).slice(-2)}|${("0" + minutes).slice(-2)}|${("0" + secondsRemaining).slice(-2)}`
+  }
+  const range = Math.max(...arrayOfSeconds) - Math.min(...arrayOfSeconds);
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  const mean = Math.round(arrayOfSeconds.reduce(reducer) / arrayOfSeconds.length);
+  arrayOfSeconds.sort((a,b) => a - b);
+  const middle = Math.ceil(arrayOfSeconds.length / 2)
+  const median = arrayOfSeconds.length % 2 == 0 ? (arrayOfSeconds[middle] + arrayOfSeconds[middle - 1]) / 2 : arrayOfSeconds[middle - 1];
+  return `Range: ${convert(range)} Average: ${convert(mean)} Median: ${convert(median)}`
+}
